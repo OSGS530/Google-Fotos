@@ -251,22 +251,18 @@ sup {
 
 /* Links */
 a {
-    color: var(--color-secondary);
     display: inline-block;
     font-weight: bold;
     text-decoration: none;
     font-size: 175%;
 }
-
-a:hover {
-    filter: brightness(var(--hover-brightness));
-    text-decoration: underline;
+.linkbanner{
+    color: white;
+}
+.linknormal{
+    color:#000;
 }
 
-a b,
-a em,
-a i,
-a strong,
 button {
     border-radius: var(--border-radius);
     display: inline-block;

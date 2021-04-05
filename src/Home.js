@@ -8,7 +8,7 @@ export const Home = ({albums}) => {
       <h1>Albums:</h1> 
       <section>
         {albums.map((album) => (
-          <Link to={`/${album.id}`}>
+          <Link to={`/${album.id}`} className="linknormal">
             <aside key={album.name}>
               <img src={album.images ? album.images[0].url : ""} alt="album" />
               <h3>{album.name}</h3>

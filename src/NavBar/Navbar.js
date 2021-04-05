@@ -6,7 +6,7 @@ function Navbar() {
   return (
     <>
       <div className='navbar'>  
-        <Link to="/">GOOGLE FOTOS</Link>
+        <Link to="/" className="linkbanner">GOOGLE FOTOS</Link>
       </div>
       </>    
   )
