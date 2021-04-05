@@ -3,6 +3,7 @@ import { app } from "./base";
 import { Switch, Route, Link} from "react-router-dom";
 import { Album } from "./Album/Album";    
 import { Home } from "./Home";
+import Navbar from "./NavBar/Navbar";
 
 const db = app.firestore();
 
@@ -21,12 +22,13 @@ function App() {
   }, []);
 
   return (
-    <main>
+    <>
+      <Navbar />
       <Switch>
         <Route exact path="/" render={() => <Home albums={albums}/>}/>
         <Route path="/:album" component={Album} />
       </Switch>
-    </main>
+    </>
   );
 }
 

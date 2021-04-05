@@ -22,8 +22,11 @@ export const NewAlbumForm = () => {
 
   return (
     <>
-      <input value={albumName} onChange={onAlbumNameChange} type="text" />
-      <button onClick={onAlbumCreate}>Create album</button>
+    <footer align="center">
+      <h3>Nombre del nuevo album:</h3>
+      <input id="inp" value={albumName} onChange={onAlbumNameChange} type="text" />
+      <button onClick={onAlbumCreate}>Crear album</button>
+    </footer>
     </>
   );
 };

@@ -26,8 +26,7 @@ export const Album = () => {
     <>
       <section>
         <header>
-          <h1>{albumName}</h1>
-          <p>Go to the <Link to="/">Home page</Link></p>
+          <h2>{albumName}</h2>
         </header>
         {images.map((image) => (
           <aside key={image.name}>

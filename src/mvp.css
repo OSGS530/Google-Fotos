@@ -198,6 +198,7 @@ h4,
 h5,
 h6 {
     line-height: var(--line-height);
+    text-align: center;
 }
 
 mark {

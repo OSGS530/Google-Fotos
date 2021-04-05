@@ -25,7 +25,9 @@ export const NewPhoto = ({currentAlbum}) => {
   }
 
   return <>
-    <input type="file" onChange={onFileChange}/>
-    <button onClick={onUpload}>Upload image</button>
+    <footer align="center">
+    <input id="inp" type="file" onChange={onFileChange}/>
+    <button onClick={onUpload}>Cargar imagen</button>
+    </footer>
   </>
 }
