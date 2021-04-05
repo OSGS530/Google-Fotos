@@ -5,7 +5,7 @@ import {NewAlbumForm} from './Album/NewAlbumForm'
 export const Home = ({albums}) => {
 
   return <>
-      <h2>Albums:</h2> 
+      <h1>Albums:</h1> 
       <section>
         {albums.map((album) => (
           <Link to={`/${album.id}`}>

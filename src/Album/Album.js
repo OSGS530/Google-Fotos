@@ -26,7 +26,7 @@ export const Album = () => {
     <>
       <section>
         <header>
-          <h2>{albumName}</h2>
+          <h1>{albumName}</h1>
         </header>
         {images.map((image) => (
           <aside key={image.name}>
