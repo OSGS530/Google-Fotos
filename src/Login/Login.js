@@ -1,5 +1,6 @@
 import React, { Component } from "react"
 import "../App.css"
+import "./Login.css"
 import { Link } from 'react-router-dom';
 import {firebaseApp,firebaseAuth,facebookAuthProvider} from '../base'
 import App from "../App"
@@ -57,7 +58,7 @@ class Login extends Component {
         ) : (
           <button
             onClick={() => this.socialLogin(facebookAuthProvider)}
-          >Signin</button>
+          >Iniciar sesion con facebook</button>
         )}
       </div>
     )
