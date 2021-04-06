@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import { NewPhoto } from "./NewPhoto";
-import { app } from "../base";
+import { projectFirestore } from "../base";
 
-const db = app.firestore();
+const db = projectFirestore;
 
 export const Album = () => {
   const [images, setImages] = useState([]);

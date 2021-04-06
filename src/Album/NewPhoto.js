@@ -1,9 +1,9 @@
 import React, {useState} from 'react'
 import firebase from 'firebase'
-import {app} from '../base'
+import {projectStorage, projectFirestore} from '../base'
 
-const db = app.firestore()
-const storage = app.storage();
+const db = projectFirestore;
+const storage = projectStorage;
 
 export const NewPhoto = ({currentAlbum}) => {
   const [file, setFile] = useState(null)

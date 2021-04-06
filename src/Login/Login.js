@@ -1,53 +1,63 @@
 import React, { Component } from "react"
 import "../App.css"
-import firebase from "firebase"
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
-
-firebase.initializeApp({
-  apiKey: "AIzaSyCMIxABGIDftHZOAMPg-q1dIf03oeRocww",
-  authDomain: "fotos-57ce6.firebaseapp.com"
-})
+import { Link } from 'react-router-dom';
+import {firebaseApp,firebaseAuth,facebookAuthProvider} from '../base'
+import App from "../App"
 
 class Login extends Component {
   state = { isSignedIn: false }
   uiConfig = {
-    signInFlow: "popup",
-    signInOptions: [
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID,
-      firebase.auth.TwitterAuthProvider.PROVIDER_ID,
-      firebase.auth.GithubAuthProvider.PROVIDER_ID,
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
-    ],
-    callbacks: {
+  signInOptions: [
+    facebookAuthProvider.PROVIDER_ID
+  ],
+  signInSuccessUrl: '/signedIn',  
+  callbacks: {
       signInSuccess: () => false
-    }
   }
+}
 
   componentDidMount = () => {
-    firebase.auth().onAuthStateChanged(user => {
+    firebaseApp.auth().onAuthStateChanged(user => {
       this.setState({ isSignedIn: !!user })
       console.log("user", user)
     })
   }
 
+  socialLogin = async (provider) =>   {
+    provider.addScope('public_profile')
+    provider.addScope('email')
+    await firebaseApp
+      .auth()
+      .signInWithPopup(provider)
+      .then(result => {
+        if (result != null) {
+          console.log(result);
+        }
+      })
+      .catch(error => {
+        alert("Intentelo nuevamente");
+      });
+  }
   render() {
     return (
       <div className="App">
         {this.state.isSignedIn ? (
           <span>
-            <button onClick={() => firebase.auth().signOut()}>Sign out!</button>
-            <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
+            <nav class="navbar">
+            <Link to="/" className="linkbanner">GOOGLE FOTOS</Link>
+            <button onClick={() => firebaseAuth.signOut()}>Salir</button>
+            <h3 className="linkbanner">{firebaseAuth.currentUser.displayName}</h3>
             <img
               alt="profile picture"
-              src={firebase.auth().currentUser.photoURL}
+              src={firebaseAuth.currentUser.photoURL}
             />
+            </nav>
+            <App />
           </span>
         ) : (
-          <StyledFirebaseAuth
-            uiConfig={this.uiConfig}
-            firebaseAuth={firebase.auth()}
-          />
+          <button
+            onClick={() => this.socialLogin(facebookAuthProvider)}
+          >Signin</button>
         )}
       </div>
     )

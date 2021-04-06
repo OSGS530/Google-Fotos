@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { app } from "./base";
+import { projectFirestore } from "./base";
 import { Switch, Route, Link} from "react-router-dom";
 import { Album } from "./Album/Album";    
 import { Home } from "./Home";
-import Navbar from "./NavBar/Navbar";
 
-const db = app.firestore();
+const db = projectFirestore;
 
 function App() {
   const [albums, setAlbums] = useState([]);
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <>
-      <Navbar />
       <Switch>
         <Route exact path="/" render={() => <Home albums={albums}/>}/>
         <Route path="/:album" component={Album} />

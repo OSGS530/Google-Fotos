@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { app } from "../base";
+import { projectFirestore } from "../base";
 
-const db = app.firestore();
+const db = projectFirestore;
 
 export const NewAlbumForm = () => {
   const [albumName, setAlbumName] = useState("");
