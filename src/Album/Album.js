@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouteMatch, Link } from "react-router-dom";
 import { NewPhoto } from "./NewPhoto";
-import { projectFirestore } from "../base";
+import { projectFirestore,firebaseAuth } from "../base";
 
 const db = projectFirestore;
 
@@ -12,8 +12,8 @@ export const Album = () => {
   const match = useRouteMatch("/:album");
   const { album } = match.params;
 
-  useEffect(() => {
-    const unmount = db.collection("albums")
+  useEffect(() => { 
+    const unmount = db.collection("users/"+firebaseAuth.currentUser.uid+"/albums")
       .doc(album)
       .onSnapshot((doc) => {
         setImages(doc.data().images || []);

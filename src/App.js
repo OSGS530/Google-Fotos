@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { projectFirestore } from "./base";
+import { projectFirestore,firebaseAuth } from "./base";
 import { Switch, Route, Link} from "react-router-dom";
 import { Album } from "./Album/Album";    
 import { Home } from "./Home";
@@ -10,7 +10,7 @@ function App() {
   const [albums, setAlbums] = useState([]);
 
   useEffect(() => {
-    const unmount = db.collection("albums").onSnapshot((snapshot) => {
+    const unmount = db.collection("users/"+firebaseAuth.currentUser.uid+"/albums").onSnapshot((snapshot) => {
       const tempAlbums = [];
       snapshot.forEach((doc) => {
         tempAlbums.push({ ...doc.data(), id: doc.id });
