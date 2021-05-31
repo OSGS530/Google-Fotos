@@ -5,9 +5,6 @@ import './mvp.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
 import App from './App';
-//import Login from './Login/Login';
-//import Register from './Register/Register';
-
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
