@@ -1,6 +1,6 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {NewAlbumForm} from './Album/NewAlbumForm'
+//import {NewAlbumForm} from './Album/NewAlbumForm'
 
 export const Home = ({albums}) => {
 
@@ -16,6 +16,6 @@ export const Home = ({albums}) => {
           </Link>
         ))}
       </section>
-      <NewAlbumForm/>
+      
   </>
 }
