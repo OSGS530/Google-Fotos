@@ -1,68 +1,151 @@
 import React, { Component } from "react"
 import "../App.css"
-import "./Login.css"
-import { Link } from 'react-router-dom';
-import {firebaseApp,firebaseAuth,facebookAuthProvider} from '../base'
-import App from "../App"
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
 
-class Login extends Component {
-  state = { isSignedIn: false }
-  uiConfig = {
-  signInOptions: [
-    facebookAuthProvider.PROVIDER_ID
-  ],
-  signInSuccessUrl: '/signedIn',  
-  callbacks: {
-      signInSuccess: () => false
+import AuthService from "../services/auth.service";
+
+const required = value => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        Necesario poner este dato
+      </div>
+    );
   }
-}
+};
 
-  componentDidMount = () => {
-    firebaseApp.auth().onAuthStateChanged(user => {
-      this.setState({ isSignedIn: !!user })
-      console.log("user", user)
-    })
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.onChangeUsername = this.onChangeUsername.bind(this);
+    this.onChangePassword = this.onChangePassword.bind(this);
+
+    this.state = {
+      username: "",
+      password: "",
+      loading: false,
+      message: ""
+    };
   }
 
-  socialLogin = async (provider) =>   {
-    provider.addScope('public_profile')
-    provider.addScope('email')
-    await firebaseApp
-      .auth()
-      .signInWithPopup(provider)
-      .then(result => {
-        if (result != null) {
-          console.log(result);
+  onChangeUsername(e) {
+    this.setState({
+      username: e.target.value
+    });
+  }
+
+  onChangePassword(e) {
+    this.setState({
+      password: e.target.value
+    });
+  }
+
+  handleLogin(e) {
+    e.preventDefault();
+
+    this.setState({
+      message: "",
+      loading: true
+    });
+
+    this.form.validateAll();
+
+    if (this.checkBtn.context._errors.length === 0) {
+      AuthService.login(this.state.username, this.state.password).then(
+        () => {
+          this.props.history.push("/profile");
+          window.location.reload();
+        },
+        error => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          this.setState({
+            loading: false,
+            message: resMessage
+          });
         }
-      })
-      .catch(error => {
-        alert("Intentelo nuevamente");
+      );
+    } else {
+      this.setState({
+        loading: false
       });
+    }
   }
+
   render() {
     return (
-      <div className="App">
-        {this.state.isSignedIn ? (
-          <span>
-            <nav class="navbar">
-            <Link to="/" className="linkbanner">GOOGLE FOTOS</Link>
-            <button onClick={() => firebaseAuth.signOut()}>Salir</button>
-            <h3 className="linkbanner">{firebaseAuth.currentUser.displayName}</h3>
-            <img
-              alt="profile picture"
-              src={firebaseAuth.currentUser.photoURL}
+        <div className="card card-container">
+          <img
+            src="https://image.shutterstock.com/image-vector/vintage-monochrome-cosmonaut-profile-view-600w-1115059940.jpg"
+            alt="profile-img"
+            className="profile-img-card"
+          />
+
+          <Form
+            onSubmit={this.handleLogin}
+            ref={c => {
+              this.form = c;
+            }}
+          >
+            <div className="form-group">
+              <label htmlFor="username">Usuario:</label>
+              <Input
+                type="text"
+                className="form-control"
+                name="username"
+                value={this.state.username}
+                onChange={this.onChangeUsername}
+                validations={[required]}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Contraseña:</label>
+              <Input
+                type="password"
+                className="form-control"
+                name="password"
+                value={this.state.password}
+                onChange={this.onChangePassword}
+                validations={[required]}
+              />
+            </div>
+
+            <div className="form-group">
+              <button
+                className="btn btn-primary btn-block"
+                disabled={this.state.loading}
+              >
+                {this.state.loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>Iniciar Sesion</span>
+              </button>
+            </div>
+
+            {this.state.message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {this.state.message}
+                </div>
+              </div>
+            )}
+            <CheckButton
+              style={{ display: "none" }}
+              ref={c => {
+                this.checkBtn = c;
+              }}
             />
-            </nav>
-            <App />
-          </span>
-        ) : (
-          <button
-            onClick={() => this.socialLogin(facebookAuthProvider)}
-          >Iniciar sesion con facebook</button>
-        )}
-      </div>
-    )
+          </Form>
+        </div>  
+    );
   }
 }
-
-export default Login

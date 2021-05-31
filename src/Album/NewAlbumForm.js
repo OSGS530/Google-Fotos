@@ -1,5 +1,5 @@
  import React, { useState } from "react";
-import { projectFirestore,firebaseAuth } from "../base";
+ import { projectFirestore } from "../base";
 
 const db = projectFirestore;
 
@@ -14,7 +14,7 @@ export const NewAlbumForm = () => {
     if (!albumName) {
       return;
     }
-    db.collection("users/"+firebaseAuth.currentUser.uid+"/albums").doc(albumName).set({
+    db.collection("albums").doc(albumName).set({
       name: albumName,
     });
     setAlbumName("");

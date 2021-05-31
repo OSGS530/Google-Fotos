@@ -4,12 +4,14 @@ import './index.css';
 import './mvp.css';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
-import Login from './Login/Login';
+//import App from './App';
+//import Login from './Login/Login';
+import Register from './Register/Register';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-    <Login/>
+    <Register/>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

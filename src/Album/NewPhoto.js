@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import firebase from 'firebase'
-import {projectStorage, projectFirestore,firebaseAuth} from '../base'
+import {projectStorage, projectFirestore} from '../base'
 
 const db = projectFirestore;
 const storage = projectStorage;
@@ -16,7 +16,7 @@ export const NewPhoto = ({currentAlbum}) => {
     const storageRef = storage.ref()
     const fileRef = storageRef.child(file.name)
     await fileRef.put(file)
-    db.collection("users/"+firebaseAuth.currentUser.uid+"/albums").doc(currentAlbum).update({
+    db.collection("albums").doc(currentAlbum).update({
       images: firebase.firestore.FieldValue.arrayUnion({
         name: file.name,
         url: await fileRef.getDownloadURL()
