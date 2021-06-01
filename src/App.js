@@ -130,6 +130,8 @@ class App extends Component{
 
         <div className="container mt-3">
           <Switch>
+            <Route path="/:album" component={Album} />
+            <Route exact path="/" component={AppTwo} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route path="/user" component={NewAlbumForm} />
@@ -142,4 +144,4 @@ class App extends Component{
   }
 }
 
-export default AppTwo;
+export default App;
